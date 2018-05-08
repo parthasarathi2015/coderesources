@@ -1,0 +1,33 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /yii2m/
+
+RewriteCond %{REQUEST_URI} yii2m/(siteadmin)  
+RewriteRule ^siteadmin/assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^siteadmin/css/(.*)$ backend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !yii2m/backend/web/(assets|css)/   
+RewriteCond %{REQUEST_URI} yii2m/(siteadmin) 
+RewriteRule ^.*$ backend/web/index.php [L]
+
+RewriteCond %{REQUEST_URI} siteadmin
+RewriteRule ^(.*)$ backend/web/$1 [L]
+
+RewriteCond %{REQUEST_URI} yii2m/(assets|css|images|fonts)  
+RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+RewriteRule ^images/(.*)$ frontend/web/images/$1 [L]
+RewriteRule ^fonts/(.*)$ frontend/web/fonts/$1 [L]
+
+RewriteCond %{REQUEST_URI} !yii2m/(frontend|backend)/web/(assets|css|images|fonts)/  
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ frontend/web/index.php
+
+
+#RewriteCond %{REQUEST_URI} siteadmin
+#RewriteRule ^(.*)$ backend/web/$1 [L]
+#RewriteCond %{REQUEST_URI} !^public
+#RewriteRule ^(.*)$ frontend/web/$1 [L]
+</IfModule>
